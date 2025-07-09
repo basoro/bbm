@@ -258,8 +258,8 @@ const Dashboard = () => {
       {/* Header */}
       <header className="bg-gradient-primary shadow-elegant">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
+            <div className="flex flex-col md:flex-row items-center gap-3 text-center md:text-left">
               <div className="flex items-center gap-2 bg-primary-foreground/10 p-3 rounded-lg">
                 <Heart className="h-8 w-8 text-primary-foreground" />
                 <Monitor className="h-6 w-6 text-primary-foreground" />
@@ -274,14 +274,14 @@ const Dashboard = () => {
               </div>
             </div>
             
-            <div className="flex flex-col items-end gap-2">
+            <div className="flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-2">
               <div className="flex items-center gap-4 text-primary-foreground">
                 <div className="text-center">
-                  <div className="text-2xl font-bold">{connectedCount}/{endpoints.length}</div>
+                  <div className="text-xl md:text-2xl font-bold">{connectedCount}/{endpoints.length}</div>
                   <div className="text-xs opacity-80">Connected</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold">{Math.round(avgResponseTime)}ms</div>
+                  <div className="text-xl md:text-2xl font-bold">{Math.round(avgResponseTime)}ms</div>
                   <div className="text-xs opacity-80">Avg Response</div>
                 </div>
               </div>
@@ -315,24 +315,24 @@ const Dashboard = () => {
       {/* Footer */}
       <footer className="bg-card border-t mt-12">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Activity className="h-4 w-4" />
-              <span className="text-sm">
-                BPJS API Monitor - Real-time Health Check Dashboard.
-              </span>
-              Built with <Heart className="inline h-4 w-4 text-red-500" /> by{" "}
-              <a
-                href="https://basoro.id"
-                target="_blank"
-                rel="noreferrer"
-                className="font-medium underline underline-offset-4"
-              >
-                Basoro
-              </a>              
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-2 text-muted-foreground text-center md:text-left">
+              <div className="flex items-center gap-2">
+                <Activity className="h-4 w-4" />
+                  BPJS Bridging Monitor. 
+                Built with <Heart className="inline h-4 w-4 text-red-500" /> by{" "}
+                <a
+                  href="https://basoro.id"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-sm underline underline-offset-4"
+                >
+                  Basoro
+                </a>
+              </div>
             </div>
-            <div className="text-xs text-muted-foreground">
-              <span><CredentialsSettings triggerClassName="text-xs hover:text-primary transition-colors" /></span>
+            <div className="text-muted-foreground mt-2 md:mt-0">
+              <span><CredentialsSettings triggerClassName="hover:text-primary transition-colors" /></span>
             </div>
           </div>
         </div>

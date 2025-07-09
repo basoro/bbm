@@ -87,7 +87,7 @@ export default function CredentialsSettings({ triggerClassName }: CredentialsSet
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm" className={triggerClassName}>
           <Settings className="h-4 w-4 mr-2" />
-          Pengaturan Credentials
+          Pengaturan
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px] shadow-elegant animate-fade-in">
