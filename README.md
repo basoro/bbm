@@ -1,4 +1,4 @@
-# Welcome to BPJS Bridging Monitor (BBM)
+# BPJS Bridging Monitor (BBM)
 
 **Use your preferred IDE**
 
