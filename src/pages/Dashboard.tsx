@@ -32,7 +32,7 @@ const Dashboard = () => {
     {
       id: "poli",
       name: "Get Poli",
-      endpoint: "/referensi/poli",
+      endpoint: "/referensi/poli/GIG",
       description: "Data referensi poli rumah sakit",
       status: "connected",
       responseTime: 1173,
@@ -52,7 +52,7 @@ const Dashboard = () => {
     {
       id: "status-pulang",
       name: "Get Status Pulang",
-      endpoint: "/referensi/statuspulang",
+      endpoint: "/referensi/carakeluar",
       description: "Referensi status pulang pasien",
       status: "connected",
       responseTime: 868,
@@ -72,7 +72,7 @@ const Dashboard = () => {
     {
       id: "obat",
       name: "Get Obat",
-      endpoint: "/referensi/obat/{keyword}",
+      endpoint: "/referensi/obatprb/{keyword}",
       description: "Data referensi obat",
       status: "connected",
       responseTime: 748,
@@ -82,7 +82,7 @@ const Dashboard = () => {
     {
       id: "riwayat",
       name: "Get Riwayat Kunjungan",
-      endpoint: "/Peserta/{cardNumber}/history",
+      endpoint: "/monitoring/HistoriPelayanan/NoKartu/{cardNumber}/tglMulai/{startDate}/tglAkhir/{endDate}",
       description: "Riwayat kunjungan peserta",
       status: "connected",
       responseTime: 1098,
@@ -319,13 +319,17 @@ const Dashboard = () => {
             <div className="flex flex-col md:flex-row items-center md:items-start gap-2 text-muted-foreground text-center md:text-left">
               <div className="flex items-center gap-2">
                 <Activity className="h-4 w-4" />
+                <span>
                   BPJS Bridging Monitor. 
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
                 Built with <Heart className="inline h-4 w-4 text-red-500" /> by{" "}
                 <a
                   href="https://basoro.id"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-sm underline underline-offset-4"
+                  className="underline underline-offset-4"
                 >
                   Basoro
                 </a>
