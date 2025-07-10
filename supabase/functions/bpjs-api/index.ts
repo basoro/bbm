@@ -11,6 +11,7 @@ interface BpjsRequest {
   consId?: string;
   userKey?: string;
   secretKey?: string;
+  testEndpoint?: string;
 }
 
 // Generate HMAC SHA256 signature
@@ -58,7 +59,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { cardNumber, serviceDate, consId, userKey, secretKey }: BpjsRequest = await req.json();
+    const { cardNumber, serviceDate, consId, userKey, secretKey, testEndpoint }: BpjsRequest = await req.json();
 
     // Use provided credentials or fallback to environment variables
     const finalConsId = consId || Deno.env.get('BPJS_CONS_ID');
@@ -101,10 +102,28 @@ Deno.serve(async (req) => {
       'user_key': finalUserKey
     };
 
-    // Build BPJS endpoint
+    // Build BPJS endpoint based on testEndpoint
     const baseUrl = 'https://apijkn.bpjs-kesehatan.go.id';
     const serviceName = 'vclaim-rest';
-    const endpoint = `${baseUrl}/${serviceName}/Peserta/nokartu/${cardNumber}/tglSEP/${serviceDate}`;
+    
+    // Define endpoint mappings
+    const endpointMap: { [key: string]: string } = {
+      'peserta': `/Peserta/nokartu/${cardNumber}/tglSEP/${serviceDate}`,
+      'poli': '/referensi/poli',
+      'dokter': '/referensi/dokter/1', // Default type 1
+      'status-pulang': '/referensi/statuspulang',
+      'diagnosa': '/referensi/diagnosa/A00', // Default keyword
+      'obat': '/referensi/obat/paracetamol', // Default keyword
+      'riwayat': `/Peserta/${cardNumber}/history`,
+      'rujukan': `/Rujukan/${cardNumber}`
+    };
+    
+    // Use specific endpoint or default to peserta
+    const apiPath = testEndpoint && endpointMap[testEndpoint] 
+      ? endpointMap[testEndpoint] 
+      : endpointMap['peserta'];
+    
+    const endpoint = `${baseUrl}/${serviceName}${apiPath}`;
 
     console.log(`Making BPJS API call to: ${endpoint}`);
 
