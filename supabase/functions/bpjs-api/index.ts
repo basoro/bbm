@@ -109,12 +109,12 @@ Deno.serve(async (req) => {
     // Define endpoint mappings
     const endpointMap: { [key: string]: string } = {
       'peserta': `/Peserta/nokartu/${cardNumber}/tglSEP/${serviceDate}`,
-      'poli': '/referensi/poli',
+      'poli': '/referensi/poli/GIG',
       'dokter': '/referensi/dokter/1', // Default type 1
-      'status-pulang': '/referensi/statuspulang',
+      'status-pulang': '/referensi/carakeluar',
       'diagnosa': '/referensi/diagnosa/A00', // Default keyword
-      'obat': '/referensi/obat/paracetamol', // Default keyword
-      'riwayat': `/Peserta/${cardNumber}/history`,
+      'obat': '/referensi/obatprb/paracetamol', // Default keyword
+      'riwayat': `/monitoring/HistoriPelayanan/NoKartu/${cardNumber}/tglMulai/${serviceDate}/tglAkhir/${serviceDate}`,
       'rujukan': `/Rujukan/${cardNumber}`
     };
     
@@ -133,7 +133,31 @@ Deno.serve(async (req) => {
       headers: bpjsHeaders,
     });
 
-    const responseData = await response.json();
+    // Check content type and handle both JSON and XML responses
+    const contentType = response.headers.get('content-type') || '';
+    let responseData;
+    
+    try {
+      if (contentType.includes('application/json')) {
+        responseData = await response.json();
+      } else {
+        // If it's XML or any other format, treat as text
+        const responseText = await response.text();
+        responseData = {
+          error: 'API returned non-JSON response',
+          content: responseText,
+          contentType: contentType
+        };
+      }
+    } catch (parseError) {
+      // If JSON parsing fails, get the raw text
+      const responseText = await response.text();
+      responseData = {
+        error: 'Failed to parse response',
+        content: responseText,
+        contentType: contentType
+      };
+    }
 
     if (!response.ok) {
       console.error('BPJS API Error:', responseData);
